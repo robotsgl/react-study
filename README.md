@@ -29,3 +29,7 @@ React 是一个构建用户界面的Javascript库，将数据渲染成HTML视图
 （6） 数组常用方法
 
 （7） 模块化
+
+## React 模块化和组件化的理解和使用
+
+    (1) 下载调试工具: React Developer Tools
