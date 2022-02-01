@@ -15,22 +15,7 @@
 	<!-- 引入babel，用于将jsx转为js -->
 	<script type="text/javascript" src="../js/babel.min.js"></script>
 
-	<script type="text/babel" > /* 此处一定要写babel */
-	/*
-		模块化
-			1: 向外提供特定功能的js程序，一般就是一个js文件
-			2：业务增加，代码越来越多
-			3: 复用js，简化js的编写，提高js运行效率
-
-		组件
-			1：用来实现局部功能效果的代码和资源集合（html/css/image等等）
-			2：一个界面会有更复杂的功能
-			3：作用：复用代码，简化项目编码，提高运行效率
-		
-		
-	*/
-
-		//1.创建虚拟函数组件
+	<script type="text/babel" > 
 		function MyComponent(){
 			console.log(this)
 			return <h2>我是用函数定义的组件（适用于【简单组件】定义）</h2>
