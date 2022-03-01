@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>1-React声明周期</title>
+</head>
+<body>
+	<!-- 准备好一个“容器” -->
+	<div id="test"></div>
+
+	<!-- 引入react核心库 -->
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<!-- 引入react-dom，用于支持react操作DOM -->
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<!-- 引入babel，用于将jsx转为js -->
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel" > 
+  
+		/*
+			挂载 
+			卸载
+			声明周期回调函数，声明周期钩子函数，声明周期函数
+		*/
+        
+		class Count extends React.Component{
+
+			//1 构造器
+			constructor(props){
+				console.log('Count---constructor')
+				super(props)
+				this.state = {count:0}
+			}
+
+			//2 组件将要挂载
+			componentWillMount(){
+				console.log('Count---componentWillMount')
+			}
+
+	
+
+			add = () => {
+				console.log('Count---add')
+				//获取原状态
+				const {count} = this.state
+
+				//更新数据
+				this.setState({count:count+1})
+			}
+
+			uninstall = () => {
+				console.log('Count---uninstall')
+				ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+			}
+
+			//3 render 渲染
+			render(){
+				console.log('Count---render')
+				const {count} = this.state
+
+				return (
+					<div>
+						<h2>当前求和为: {count}</h2>
+						<button onClick={this.add}>点我+1</button>
+						<button onClick={this.uninstall}>卸载组件</button>
+					</div>
+				)
+			}
+			//3 render 加载完毕
+			componentDidMount(){
+				console.log('Count---componentDidMount')
+			}
+
+			//4 render 卸载完毕之后
+			componentWillUnmount(){
+				console.log('Count---componentDidMount')
+			}
+		}
+		ReactDOM.render(<Count/>,document.getElementById('test'))
+	</script>
+</body>
+</html>

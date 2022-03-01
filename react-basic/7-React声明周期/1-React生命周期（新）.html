@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>1-React声明周期</title>
+</head>
+<body>
+	<!-- 准备好一个“容器” -->
+	<div id="test"></div>
+
+	<!-- 引入react核心库 -->
+	<script type="text/javascript" src="../js/17.0.1/react.development.js"></script>
+	<!-- 引入react-dom，用于支持react操作DOM -->
+	<script type="text/javascript" src="../js/17.0.1/react-dom.development.js"></script>
+	<!-- 引入babel，用于将jsx转为js -->
+	<script type="text/javascript" src="../js/17.0.1/babel.min.js"></script>
+
+	<script type="text/babel" > 
+
+		class Count extends React.Component{
+			//1 构造器
+			constructor(props){
+				console.log('Count---constructor')
+				super(props)
+				this.state = {count:0}
+			}
+
+			static getDerivedStateFromProps(){
+				console.log('Count---getDerivedStateFromProps')
+				return null 
+			}
+			add = () => {
+				//获取原状态
+				const {count} = this.state
+
+				//更新数据
+				this.setState({count:count+1})
+				console.log('Count---add set state')
+			}
+
+			
+			uninstall = () => {
+				console.log('Count---uninstall')
+				ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+			}
+
+			force = () => {
+				const {count} = this.state 
+				console.log('Count---force')
+				this.forceUpdate()
+			}
+
+		
+			//3 render 渲染
+			render(){
+				console.log('Count---render')
+				const {count} = this.state
+
+				return (
+					<div>
+						<h2>当前求和为: {count}</h2>
+						<button onClick={this.add}>点我+1</button>
+						<button onClick={this.uninstall}>卸载组件</button>
+						<button onClick={this.force}>强制更新</button>
+					</div>
+				)
+			}
+
+			componentDidMount(){
+				console.log('Count---componentDidMmount')
+			}
+	
+		}
+	
+		ReactDOM.render(<Count/>,document.getElementById('test'))
+	</script>
+</body>
+</html>
