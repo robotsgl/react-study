@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>02 使用JSX创建DOM</title>
+</head>
+<body>
+	<!-- 准备好一个“容器” -->
+	<div id="test"></div>
+
+	<!-- 引入react核心库 -->
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<!-- 引入react-dom，用于支持react操作DOM -->
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<!-- 引入babel，用于将jsx转为js -->
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel" > /* 此处一定要写babel */
+	/*
+		模块化
+			1: 向外提供特定功能的js程序，一般就是一个js文件
+			2：业务增加，代码越来越多
+			3: 复用js，简化js的编写，提高js运行效率
+
+		组件
+			1：用来实现局部功能效果的代码和资源集合（html/css/image等等）
+			2：一个界面会有更复杂的功能
+			3：作用：复用代码，简化项目编码，提高运行效率
+		
+		
+	*/
+
+		//1.创建虚拟函数组件
+		function MyComponent(){
+			console.log(this)
+			return <h2>我是用函数定义的组件（适用于【简单组件】定义）</h2>
+		}
+	
+		//2.渲染组件到页面
+		ReactDOM.render(<MyComponent/>,document.getElementById('test'))
+
+		/*
+			React执行了ReactDOM.render(<MyComponent/>)之后发什么了什么
+			1：解析动态组件标签，寻找MyComponent组件
+			2：发现是函数定义的，随后调用该函数，获取返回值把虚拟DOM转成真实DOM
+			呈现在页面中
+		*/
+
+		/*
+			类总结：
+				1: 构造器不是必须的，只有在初始化的操作，或者添加属性的时候
+				2: 如果父类中有构造器，在子类继承的时候必须调用super方法
+				3: 类中所有定义的方法，都是放在了类的原型定义上
+		*/
+	</script>
+</body>
+</html>

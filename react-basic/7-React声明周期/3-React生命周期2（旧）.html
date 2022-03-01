@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>1-React声明周期</title>
+</head>
+<body>
+	<!-- 准备好一个“容器” -->
+	<div id="test"></div>
+
+	<!-- 引入react核心库 -->
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<!-- 引入react-dom，用于支持react操作DOM -->
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<!-- 引入babel，用于将jsx转为js -->
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel" > 
+  
+		/*
+			挂载 
+			卸载
+			声明周期回调函数，声明周期钩子函数，声明周期函数
+
+			组件生命周期
+
+			1. 初始化阶段: 有ReactDOM.render() 触发--初次渲染
+					1. constructor()
+					2. componentWillMmount
+					3. render()
+					4. componentDidMount =====> 开启定时器， 发送网络请求，订阅消息
+			2. 更新阶段，有组件内部this.setState() 或者由夫组件重新render触发
+					1. shouldComponentUpdate()
+					2. componentWillUpdate()
+					3. render()          ======> 必须要用
+					4. componentDidUpdate()
+			3. 卸载组件： 由ReactDOM.ummountComponentAtNODE()触发
+					1. componentWillUnmount() =====》 关闭定时器，取消订阅消息
+		*/
+        
+		class Count extends React.Component{
+
+
+
+			//1 构造器
+			constructor(props){
+				console.log('Count---constructor')
+				super(props)
+				this.state = {count:0}
+			}
+
+			//2 组件将要挂载
+			componentWillMount(){
+				console.log('Count---componentWillMount')
+			}
+
+	
+
+			add = () => {
+				//获取原状态
+				const {count} = this.state
+
+				//更新数据
+				this.setState({count:count+1})
+				console.log('Count---add set state')
+			}
+
+			
+			uninstall = () => {
+				console.log('Count---uninstall')
+				ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+			}
+
+			force = () => {
+				const {count} = this.state 
+				console.log('Count---force')
+				this.forceUpdate()
+			}
+
+			//更新状态, 控制是否需要
+			shouldComponentUpdate(){
+				console.log('Count---shouldComponentUpdate')
+				return true
+			}
+
+			componentWillUpdate(){
+				console.log('Count---componentWillUpdate')
+				
+			}
+
+			componentDidUpdate(){
+				console.log('Count---componentDidUpdate')
+				
+			}
+
+			//3 render 加载完毕
+			componentDidMount(){
+				console.log('Count---componentDidMount')
+			}
+
+			//4 render 卸载完毕之后
+			componentWillUnmount(){
+				console.log('Count---componentDidMount')
+			}
+			//3 render 渲染
+			render(){
+				console.log('Count---render')
+				const {count} = this.state
+
+				return (
+					<div>
+						<h2>当前求和为: {count}</h2>
+						<button onClick={this.add}>点我+1</button>
+						<button onClick={this.uninstall}>卸载组件</button>
+						<button onClick={this.force}>强制更新</button>
+					</div>
+				)
+			}
+	
+		}
+		
+		class A extends React.Component{
+			state = {car:'奔驰'}
+			changeCar = () =>{
+				this.setState({car: '奥托'})
+			}
+			render (){
+				return (
+					<div>
+						<h2>我是组件A</h2>	
+						<button onClick = {this.changeCar}>我要换车</button>
+						<B carName = {this.state.car}/>
+					</div>
+				)
+			}
+		}
+
+		class B extends React.Component{
+			componentWillReceiveProps(){
+				console.log('B --- componentWillReceiveProps')
+			}
+
+			shouldComponentUpdate(){
+				console.log('B --- shouldComponentUpdate')
+				return true
+			}
+
+			componentWillUpdate(){
+				console.log('B --- componentWillUpdate')
+			}
+
+			render (){
+				console.log('B --- render')
+				return (
+					<div>
+						<h2>我是组件B,我现在的车是: {this.props.carName} </h2>	
+					</div>
+				)
+			}
+
+			componentDidUpdate(){
+				console.log('B --- componentWillUpdate')
+			}
+		}
+		ReactDOM.render(<Count/>,document.getElementById('test'))
+	</script>
+</body>
+</html>
